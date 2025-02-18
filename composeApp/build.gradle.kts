@@ -1,5 +1,3 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -11,7 +9,7 @@ plugins {
 
 kotlin {
     androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class) compilerOptions {
+        compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
@@ -30,6 +28,11 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+
+            //Koin - dependences Injection
+            implementation(project.dependencies.platform("io.insert-koin:koin-bom:3.5.1"))
+            implementation(libs.koin.core)
+            implementation(libs.insert.koin.koin.android)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -44,11 +47,15 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtime.compose)
 
             // Navigation Precompose
-            api("moe.tlaster:precompose:1.6.2")
+            api(libs.precompose)
             // ViewModel
-            api("moe.tlaster:precompose-viewmodel:1.6.2")
+            api(libs.precompose.viewmodel)
 
-
+            //Koin - dependences Injection
+            implementation(project.dependencies.platform("io.insert-koin:koin-bom:3.5.1"))
+            implementation(libs.insert.koin.koin.core)
+            implementation(libs.insert.koin.koin.compose)
+            api(libs.precompose.koin)
         }
         iosMain.dependencies {
             //IOS dependencies

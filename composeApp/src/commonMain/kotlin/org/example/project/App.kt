@@ -25,78 +25,81 @@ import moe.tlaster.precompose.navigation.path
 import moe.tlaster.precompose.navigation.rememberNavigator
 import org.example.project.data.TitleTopBarTypes
 import org.example.project.navigation.Navigation
+import org.koin.compose.KoinContext
 
 @Composable
 fun App() {
     PreComposeApp {
 
-        val colors = getColorsTheme()
+        KoinContext {
 
-        AppTheme {
-            val navigator = rememberNavigator()
-            val titleTopBar = getTitleTopBar(navigator)
-            val isEditOrAddExpenses = titleTopBar != TitleTopBarTypes.DASHBOARD.value
-            Scaffold(
-                modifier = Modifier.fillMaxSize(),
-                topBar = {
-                    TopAppBar(
-                        elevation = 0.dp,
-                        title = {
-                            Text(
-                                text = titleTopBar,
-                                fontSize = 25.sp,
-                                color = colors.textColor
-                            )
-                        },
-                        navigationIcon = {
-                            if (isEditOrAddExpenses) {
-                                IconButton(
-                                    onClick = {
-                                        navigator.popBackStack()
+            val colors = getColorsTheme()
+            AppTheme {
+                val navigator = rememberNavigator()
+                val titleTopBar = getTitleTopBar(navigator)
+                val isEditOrAddExpenses = titleTopBar != TitleTopBarTypes.DASHBOARD.value
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    topBar = {
+                        TopAppBar(
+                            elevation = 0.dp,
+                            title = {
+                                Text(
+                                    text = titleTopBar,
+                                    fontSize = 25.sp,
+                                    color = colors.textColor
+                                )
+                            },
+                            navigationIcon = {
+                                if (isEditOrAddExpenses) {
+                                    IconButton(
+                                        onClick = {
+                                            navigator.popBackStack()
+                                        }
+                                    ) {
+                                        Icon(
+                                            modifier = Modifier.padding(start = 16.dp),
+                                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                            tint = colors.textColor,
+                                            contentDescription = "Arrow Back Icon"
+                                        )
                                     }
-                                ) {
+
+                                } else {
                                     Icon(
                                         modifier = Modifier.padding(start = 16.dp),
-                                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                        imageVector = Icons.Default.Apps,
                                         tint = colors.textColor,
-                                        contentDescription = "Arrow Back Icon"
+                                        contentDescription = "DashBoard Icon"
                                     )
                                 }
 
-                            } else {
+                            },
+                            backgroundColor = colors.backgroundColor
+                        )
+                    },
+                    floatingActionButton = {
+                        if (!isEditOrAddExpenses) {
+                            FloatingActionButton(
+                                modifier = Modifier.padding(8.dp),
+                                onClick = {
+                                    navigator.navigate("/addExpenses")
+                                },
+                                shape = RoundedCornerShape(50),
+                                backgroundColor = colors.addIconColor,
+                                contentColor = Color.White
+                            ) {
                                 Icon(
-                                    modifier = Modifier.padding(start = 16.dp),
-                                    imageVector = Icons.Default.Apps,
-                                    tint = colors.textColor,
-                                    contentDescription = "DashBoard Icon"
+                                    imageVector = Icons.Default.Add,
+                                    tint = Color.White,
+                                    contentDescription = "Floating icon"
                                 )
                             }
-
-                        },
-                        backgroundColor = colors.backgroundColor
-                    )
-                },
-                floatingActionButton = {
-                    if(!isEditOrAddExpenses) {
-                        FloatingActionButton(
-                            modifier = Modifier.padding(8.dp),
-                            onClick = {
-                                navigator.navigate("/addExpenses")
-                            },
-                            shape = RoundedCornerShape(50),
-                            backgroundColor = colors.addIconColor,
-                            contentColor = Color.White
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Add,
-                                tint = Color.White,
-                                contentDescription = "Floating icon"
-                            )
                         }
                     }
+                ) {
+                    Navigation(navigator)
                 }
-            ) {
-                Navigation(navigator)
             }
         }
     }
