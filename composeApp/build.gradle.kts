@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -5,10 +6,26 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+
+    //Se necesita para la db SQLDelight
+    kotlin("plugin.serialization") version "2.0.0"
+
+    // SQLDelight
+    id("app.cash.sqldelight") version "2.0.2"
+
+}
+
+sqldelight {
+    databases {
+        create("AppDatabase") {
+            packageName.set("com.expenseApp.db")
+        }
+    }
 }
 
 kotlin {
     androidTarget {
+        @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
@@ -33,6 +50,9 @@ kotlin {
             implementation(project.dependencies.platform("io.insert-koin:koin-bom:3.5.1"))
             implementation(libs.koin.core)
             implementation(libs.insert.koin.koin.android)
+
+            //SQLDelight
+            implementation(libs.android.driver)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -59,18 +79,24 @@ kotlin {
         }
         iosMain.dependencies {
             //IOS dependencies
+
+            //SQLDelight
+            implementation(libs.native.driver)
+
         }
 
         // commonTest Dependencies
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+            implementation(libs.kotlinx.coroutines.core)
+
         }
     }
 }
 
 android {
     namespace = "org.example.project"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "org.example.project"

@@ -1,0 +1,37 @@
+CREATE TABLE ExpenseEntity(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    amount REAL NOT NULL,
+    categoryName TEXT NOT NULL,
+    description TEXT NOT NULL
+);
+
+INSERT INTO ExpenseEntity(amount, categoryName, description)
+VALUES
+(70.0, 'GROCERIES', 'Weekly buy'),
+(50000.0, 'CAR', 'Chevrolet'),
+(4.0, 'SNACKS', 'Kitkat Chocolate'),
+(25.0,'COFFEE','Capucchin'),
+(23.43, 'PARTY', 'weekend Party'),
+(43.44, 'HOUSE', 'Cleaning'),
+(15.0, 'OTHER', 'weekly buy');
+
+insert:
+INSERT INTO ExpenseEntity (amount, categoryName, description)
+VALUES (?,?,?); --WILD CARDS
+
+update:
+UPDATE ExpenseEntity
+SET amount = ?,
+    categoryName = ?,
+    description = ?
+WHERE id = ?;
+
+delete:
+DELETE FROM ExpenseEntity
+WHERE id = ?;
+
+selectAll:
+SELECT * FROM ExpenseEntity;
+
+categories:
+SELECT categoryName FROM ExpenseEntity;

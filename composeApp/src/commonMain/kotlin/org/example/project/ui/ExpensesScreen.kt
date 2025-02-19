@@ -29,9 +29,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.example.project.model.Expense
-import org.example.project.data.ExpenseManager
 import org.example.project.getColorsTheme
+import org.example.project.model.Expense
 import org.example.project.presentation.ExpenseUiState
 
 @OptIn(ExperimentalFoundationApi::class)
