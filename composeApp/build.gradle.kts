@@ -7,7 +7,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
 
-    //Se necesita para la db SQLDelight
+    //Se necesita para la db SQLDelight Y API REST
     kotlin("plugin.serialization") version "2.0.0"
 
     // SQLDelight
@@ -53,6 +53,11 @@ kotlin {
 
             //SQLDelight
             implementation(libs.android.driver)
+
+            //API REST Ktor
+            implementation(libs.ktor.client.okhttp)
+            implementation(libs.kotlinx.coroutines.android) //coroutines
+
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -76,12 +81,22 @@ kotlin {
             implementation(libs.insert.koin.koin.core)
             implementation(libs.insert.koin.koin.compose)
             api(libs.precompose.koin)
+
+            //API REST Ktor
+            implementation(libs.ktor.client.core)
+            implementation(libs.kotlinx.coroutines.core)  //coroutines
+            implementation(libs.ktor.content.negotiation)
+            implementation(libs.ktor.serialization)
+
         }
         iosMain.dependencies {
             //IOS dependencies
 
             //SQLDelight
             implementation(libs.native.driver)
+
+            //API REST Ktor
+            implementation(libs.ktor.client.darwin)
 
         }
 
@@ -126,6 +141,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.ui.android)
     debugImplementation(compose.uiTooling)
 }
 

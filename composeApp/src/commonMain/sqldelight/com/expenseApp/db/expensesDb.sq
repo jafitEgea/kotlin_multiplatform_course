@@ -5,15 +5,15 @@ CREATE TABLE ExpenseEntity(
     description TEXT NOT NULL
 );
 
-INSERT INTO ExpenseEntity(amount, categoryName, description)
-VALUES
-(70.0, 'GROCERIES', 'Weekly buy'),
-(50000.0, 'CAR', 'Chevrolet'),
-(4.0, 'SNACKS', 'Kitkat Chocolate'),
-(25.0,'COFFEE','Capucchin'),
-(23.43, 'PARTY', 'weekend Party'),
-(43.44, 'HOUSE', 'Cleaning'),
-(15.0, 'OTHER', 'weekly buy');
+-- INSERT INTO ExpenseEntity(amount, categoryName, description)
+-- VALUES
+-- (70.0, 'GROCERIES', 'Weekly buy'),
+-- (50000.0, 'CAR', 'Chevrolet'),
+-- (4.0, 'SNACKS', 'Kitkat Chocolate'),
+-- (25.0,'COFFEE','Capucchin'),
+-- (23.43, 'PARTY', 'weekend Party'),
+-- (43.44, 'HOUSE', 'Cleaning'),
+-- (15.0, 'OTHER', 'weekly buy');
 
 insert:
 INSERT INTO ExpenseEntity (amount, categoryName, description)
@@ -34,4 +34,11 @@ selectAll:
 SELECT * FROM ExpenseEntity;
 
 categories:
-SELECT categoryName FROM ExpenseEntity;
+SELECT "GROCERIES" AS categoryName
+UNION SELECT "SNACKS"
+UNION SELECT "CAR"
+UNION SELECT "COFFEE"
+UNION SELECT "PARTY"
+UNION SELECT "HOUSE"
+UNION SELECT "OTHER";
+-- SELECT categoryName FROM ExpenseEntity;
